@@ -40,6 +40,13 @@ class Line(object):
         self.start = start
         self.end = end
 
+    def get_points(self):
+        """ Returns a tuple of the start and end coordinates in the form of
+        ((startx,starty),(endx,endy))
+        """
+
+        return (self.start, self.end)
+
 
 class Graph(object):
     """ Graphical representation of the Plane
@@ -58,6 +65,14 @@ class Graph(object):
 
         for point in points:
             self.imd.point((point.get_coordinates()), fill="black")
+
+    def paint_lines (self, lines):
+        """ Draws all the given lines.
+        """
+
+        for line in lines:
+            (start,end) = line.get_points()
+            self.imd.line([start,end], fill="black")
 
     def show(self):
         """ Show the image
@@ -88,6 +103,12 @@ class Plane(object):
             points.append(Point())
 
         return points
+
+    def connect(self, point1, point2):
+        """ Connects two points on the plane.
+        """
+
+        self.lines.append(Line(point1.get_coordinates(), point2.get_coordinates()))
 
     def show_points(self):
         """ Creates and displays an image with all the points of the plane.
